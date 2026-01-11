@@ -109,7 +109,7 @@ body.home.light .home-details h6 {
 }
 
 body.home.light .bg {
-  background-image: url(../img/light.jpg);
+  background-image: url(../img/img1.1.jpeg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
@@ -499,7 +499,8 @@ body.light hr.separator {
 }
 
 .home .bg {
-  background-image: url(../img/2.jpg);
+  /* ✅ UPDATED HERE (was img1.jpg) */
+  background-image: url(../img/img1.1.jpeg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
@@ -1760,4 +1761,89 @@ body.light hr.separator {
   .separator.mt-1 {
     margin-top: 35px !important;
   }
+}
+
+
+
+/* =========================================
+   FIX: Keep right-side header visible
+   when portfolio slideshow is open
+   ========================================= */
+
+/* When the slideshow is open, force header to be visible and on top */
+.portfolio.slideshow-open .header,
+body.portfolio.slideshow-open .header {
+  opacity: 1 !important;
+  z-index: 2222 !important;  /* must be higher than .slideshow (1111) */
+  pointer-events: auto !important;
+}
+
+/* If JS adds .hide-header, cancel that hiding */
+.portfolio.slideshow-open .header.hide-header,
+body.portfolio.slideshow-open .header.hide-header {
+  opacity: 1 !important;
+  z-index: 2222 !important;
+}
+
+/* Optional: keep the icon menu above too */
+.portfolio.slideshow-open .header ul.icon-menu {
+  z-index: 2223 !important;
+  position: relative;
+}
+
+
+
+/* ============================================================
+   FORCE RIGHT ICON MENU TO STAY VISIBLE ABOVE PORTFOLIO MODAL
+   Add this at the VERY END of style.css
+   ============================================================ */
+
+/* Put header always above slideshow (desktop) */
+@media (min-width: 992px) {
+  .portfolio .header {
+    z-index: 99999 !important;     /* higher than slideshow */
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;       /* in case JS changes display */
+    pointer-events: auto !important;
+  }
+
+  /* If JS adds hide-header, cancel it (ANYWHERE slideshow-open exists) */
+  .slideshow-open .header,
+  html.slideshow-open .header,
+  body.slideshow-open .header,
+  #grid-gallery.slideshow-open ~ .header,
+  .grid-gallery.slideshow-open ~ .header,
+  .grid-gallery.slideshow-open .header,
+  #grid-gallery.slideshow-open .header {
+    z-index: 99999 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+    pointer-events: auto !important;
+  }
+
+  .slideshow-open .header.hide-header,
+  html.slideshow-open .header.hide-header,
+  body.slideshow-open .header.hide-header,
+  #grid-gallery.slideshow-open .header.hide-header,
+  .grid-gallery.slideshow-open .header.hide-header {
+    z-index: 99999 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+  }
+
+  /* Keep slideshow below header (optional but helps) */
+  .portfolio .slideshow {
+    z-index: 9000 !important; /* lower than header (99999) */
+  }
+}
+
+/* ============================================================
+   FINAL OVERRIDE: Force home image (dark + light) to img1.1.png
+   ============================================================ */
+.home .bg,
+body.home.light .bg {
+  background-image: url(../img/img1.1.jpeg) !important;
 }
